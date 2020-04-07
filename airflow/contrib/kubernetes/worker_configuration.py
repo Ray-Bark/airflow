@@ -369,6 +369,11 @@ class WorkerConfiguration(LoggingMixin):
         return volumes, volume_mounts
 
     def generate_dag_volume_mount_path(self):
+        """Generate path for DAG volume"""
+
+        if self.kube_config.dags_volume_mount_point:
+            return self.kube_config.dags_volume_mount_point
+
         if self.kube_config.dags_volume_claim or self.kube_config.dags_volume_host:
             dag_volume_mount_path = self.worker_airflow_dags
         else:
